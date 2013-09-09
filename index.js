@@ -46,6 +46,17 @@ function fullscreen(el){
 }
 
 /**
+ * Current fullscreen status
+ *
+ * @property public
+ */
+
+fullscreen.fulled = document.fullscreen
+  || document.mozFullScreen
+  || document.webkitIsFullScreen
+  || false;
+
+/**
  * Exit fullscreen.
  *
  * @api public
@@ -64,8 +75,9 @@ exports.exit = function(){
 
 function change(prop) {
   return function(){
-    var val = document[prop];
-    exports.emit('change', val);
+    var fulled = document[prop];
+    fullscreen.fulled = fulled;
+    exports.emit('change', fulled);
   }
 }
 
